@@ -1,0 +1,250 @@
+<html>
+<head>
+    <title>International Film Festival of Adoor</title>
+    <meta name="viewport" content="width=device-width">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            crossorigin="anonymous"></script>
+    <style>
+        body {
+            background-image: url("assets/img/filmfestival.jpg");
+            background-repeat: no-repeat;
+            background-position: right, left;
+            background-size: cover;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .card {
+            margin: 30 auto; /* Added */
+            float: none; /* Added */
+            margin-bottom: 10px; /* Added */
+        }
+
+        .nav-link {
+            color: white;
+        }
+
+        .nav-link:hover {
+            color: yellow;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Style inputs */
+        input[type=text], select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            margin-top: 6px;
+            margin-bottom: 16px;
+            resize: vertical;
+        }
+
+        input[type=submit] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        /* Style the container/contact section */
+        .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 10px;
+        }
+
+        /* Create two columns that float next to eachother */
+        .column {
+            float: left;
+            width: 50%;
+            margin-top: 6px;
+            padding: 20px;
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+        @media screen and (max-width: 600px) {
+            .column, input[type=submit] {
+                width: 100%;
+                margin-top: 0;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+<nav class="navbar navbar-expand-sm bg-dark">
+    <h4 class="nav-link">INTERNATIONAL FILM FESTIVAL OF ADOOR</h4>
+    <!-- Links -->
+    <!--<ul class="navbar-nav">-->
+    <!--<li class="nav-item">-->
+    <!--<a class="nav-link" href="#">Home</a>-->
+    <!--</li>-->
+    <!--<li class="nav-item">-->
+    <!--<a class="nav-link" href="#">About Us</a>-->
+    <!--</li>-->
+    <!--<li class="nav-item">-->
+    <!--<a class="nav-link" href="#">Contact Us</a>-->
+    <!--</li>-->
+    <!--</ul>-->
+
+</nav>
+<div class="container-fluid" style="text-align: center">
+    <div class="row">
+
+        <div class="col-lg-6 col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="assets/img/new1.jpeg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">PAY AS DELEGATE</h4>
+                    <p class="card-text">pay Rs 300 now and enter email for recieving invoice</p>
+                    <input type="text" placeholder="Email" id="email1">
+                    <button class="btn btn-primary" id="rzp-button1"
+                            style="margin-top: 10px;background:#FFDE41;border-color:#FFDE41">PAY
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-sm-12">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="assets/img/new2.jpeg" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">PAY AS STUDENT</h4>
+                    <p class="card-text">pay Rs 250 now and enter email for recieving invoice</p>
+                    <input type="text" placeholder="Email" id="email2">
+                    <button class="btn btn-primary" id="rzp-button2"
+                            style="margin-top:10px;background:#FFDE41;border-color:#FFDE41">PAY
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="http://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+
+
+    var email1 = document.getElementById('email1').value
+    var email2 = document.getElementById('email2').value
+
+
+    document.getElementById('rzp-button1').onclick = function (e) {
+        email1 = document.getElementById('email1').value
+        var options = {
+            "key": "rzp_live_pFgTjcFZ283ChM",
+            "amount": "30000", // 2000 paise = INR 20
+            "name": "International Film Festival of Adoor",
+            "description": "Pay as Delegate",
+            "image": "assets/img/new1.jpeg",
+            "prefill": {
+                "email": email1
+            },
+            "handler": function (response) {
+                var data = {reponse_id: response.razorpay_payment_id, email: email1,cost:"30000"};
+                sendMail(data);
+            },
+            "theme": {
+                "color": "#f3e12c"
+            }
+        };
+
+        if (email1 !== "") {
+            var rzp1 = new Razorpay(options);
+            rzp1.open();
+            e.preventDefault();
+        } else {
+            alert("Please enter email address")
+        }
+    }
+    document.getElementById('rzp-button2').onclick = function (e) {
+        email2 = document.getElementById('email2').value
+        var options2 = {
+            "key": "rzp_live_pFgTjcFZ283ChM",
+            "amount": "25000", // 2000 paise = INR 20
+            "name": "International Film Festival of Adoor",
+            "description": "Pay as Student",
+            "image": "assets/img/new2.jpeg",
+            "prefill": {
+                "email": email2
+            },
+            "handler": function (response) {
+                console.log(response)
+                var data = {reponse_id: response.razorpay_payment_id, email: email2, cost:"25000"};
+                sendMail(data);
+
+            },
+            "theme": {
+                "color": "#f3e12c"
+            }
+        };
+        if (email2 !== "") {
+            var rzp2 = new Razorpay(options2);
+            rzp2.open();
+            e.preventDefault();
+            // sendMail({reponse_id:"pay_BWuRQ2ym7jCQa9",cost:"300"})
+        } else {
+            alert("Please enter email address")
+        }
+    }
+
+
+    function sendMail(data) {
+        var msg = "We have received your message, we will contact you soon.";
+        $.ajax({
+            type: "POST",
+            url: "http://35.167.28.22:3001/capture/"+data.reponse_id+"/"+data.cost,
+            data: data,
+            cache: false,
+            success: function (result) {
+                console.log(result);
+                if (result != 0) {
+                    console.log("capture success")
+                }
+                else {
+                }
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "http://35.167.28.22/filmfestival/email.php",
+            data: data,
+            cache: false,
+            success: function (result) {
+                console.log(result);
+                if (result != 0) {
+                    alert("success")
+                }
+                else {
+                }
+            }
+        });
+    }
+</script>
+
+<script>
+
+</script>
+</body>
+</html>
